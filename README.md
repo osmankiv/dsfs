@@ -50,7 +50,7 @@ This POS web software solution offers a comprehensive system for managing sales 
 To clone the repository and get started with the project, use the following shell commands:
 
 ```shell
-git clone https://github.com/Emm-Anuel100/Point-of-sale-system.git
+git clone https://github.com/osmankiv/
 ```
 
 ```shell
