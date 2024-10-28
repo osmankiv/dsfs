@@ -31,13 +31,10 @@ foreach ($_SESSION['cart'] as $product) {
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link href="css/style.css" rel="stylesheet">
       <!-- title -->
-      <title>Cart - Dadral Stores</title>
+      <title>Cart - الزهراء </title>
       <!-- fav icon -->
       <link rel="shortcut icon" href="./images/shop_logo.png" type="image/x-icon">
       <!-- font awesome cdn link  -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" integrity="sha512-8RxmFOVaKQe/xtg6lbscU9DU0IRhURWEuiI0tXevv+lXbAHfkpamD4VKFQRto9WgfOJDwOZ74c/s9Yesv3VvIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <!-- style link -->
       <link rel="stylesheet" href="./styles/dist/cart.css">
    </head>
@@ -53,7 +50,7 @@ foreach ($_SESSION['cart'] as $product) {
             </div>
 
             <div class="cashier_name">
-             Cashier: <?= $_SESSION['cashier_name'] ?> <i class="fas fa-caret-down"></i>
+             المحاسب : <?= $_SESSION['cashier_name'] ?> <i class="fas fa-caret-down"></i>
 
              <a href="./cashier_logout/logout.php" class="cashier_logout">log out</a>
             </div>
@@ -87,11 +84,11 @@ foreach ($_SESSION['cart'] as $product) {
 
           <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="barcode_form">
             <fieldset>
-              <input type="text" name="bar_code" class="bar_code" id="bar_code" required="" autocomplete="off" placeholder="Barcode here ...">
+              <input type="text" name="bar_code" class="bar_code" id="bar_code" required="" autocomplete="off" placeholder="الباركود هنا ...">
              </fieldset> <br/>
-             <fieldset>
-              <input type="number" name="quantity" id="quantity" id="quantity" required="" min="1" placeholder="Quantity ...">
-             </fieldset>
+             <!-- <fieldset>
+              <input type="number" name="quantity" id="quantity" id="quantity" required="" min="1" placeholder="كمية ...">
+             </fieldset> -->
            </form>
              <br/><br/>
              <samp class="title">
@@ -102,13 +99,13 @@ foreach ($_SESSION['cart'] as $product) {
          <section class="cart-detail">
          <div class="cart-wrapper">
                <samp class="product" style="background: #91aecd">
-               Product name
+              اسم المنتج
                </samp>
                <samp class="product" style="background: #91aecd">
-                Product price
+                سعر المنتج
                </samp>
                <samp class="product" style="background: #91aecd">
-                 Quantity
+                 كمية
                </samp>
              </div> <br/>
 
@@ -130,7 +127,7 @@ foreach ($_SESSION['cart'] as $product) {
 
             <!-- total sum of cart items -->  
             <samp class="title" style="font-size: 19px">
-               Total: <b>SD<?= number_format($total, 2) ?> </b>
+               المجموع: <b>SD<?= number_format($total, 2) ?> </b>
               <?php @$_SESSION['total'] = $total ?>
             </samp>
             <br/><br/><br/>
@@ -141,11 +138,11 @@ foreach ($_SESSION['cart'] as $product) {
                 <br/><br/>
                 <input type="number" name="change_reminant" placeholder="Change reminant (SD) ...." min="0"  autocomplete="off" step="1" vlaue="0"  style="display:none">
                 <br/><br/> 
-                <span class="payment-label">Cash:</span> 
-                <input type="radio" name="payment_mode" value="cash">
+                <span class="payment-label">نقدي:</span> 
+                <input type="radio" name="payment_mode" value="بنكك">
 
-                <span class="payment-label">BOK:</span> 
-                <input type="radio" name="payment_mode" value="transfer"> 
+                <span class="payment-label">بنكك:</span> 
+                <input type="radio" name="payment_mode" value="نقدي"> 
                 <br/><br/>
                 <!-- <span class="payment-label">Debit card:</span> 
                 <input type="radio" name="payment_mode" value="Debit card">
@@ -164,7 +161,7 @@ foreach ($_SESSION['cart'] as $product) {
             <br/><br/><br/>
             <!-- page footer starts here -->
             <footer class="footer">
-             Dadral Stores <span>&copy;2012 - <?= Date('Y'); ?>.</span>
+             الزهراء  <span>&copy;2012 - <?= Date('Y'); ?>.</span>
             </footer>
             <!-- page footer ends here -->
             <br/><br/><br/>
@@ -246,41 +243,91 @@ foreach ($_SESSION['cart'] as $product) {
   }
  </style>
  <!-- styles for calculator starts here -->
+<script>
+  
+//## Function to handle form submission after delay starts here
+let submitTimeout;
+document.getElementById('bar_code').addEventListener('input', function() {
+   clearTimeout(submitTimeout); //## Clear previous timeout if exists
+   submitTimeout = setTimeout(submitForm, 1000); //## Set new timeout for 1 second
+});
+
+//## Function to submit form
+function submitForm() {
+   //## Check if both fields have values
+   const Barcode = document.getElementById('bar_code').value.trim();
+   const quantity =  1;
+   
+   if (Barcode !== '' && quantity !=='') {
+       document.getElementById('barcode_form').submit();
+   }
+
+}
+//## Function to handle form submission after delay ends here
 
 
-   <!-- external script source -->
-   <script src="./script/cart.js"></script>
-   <!-- embeded script -->
-   <script type="text/javascript">
-       // Function to fetch IP address using an external service
-       function getIPAddress() {
-       fetch('https://api.ipify.org?format=json')
-       .then(response => response.json())
-       .then(data => {
-        const ipAddress = data.ip;
-        document.querySelector(".ip_address").value = ipAddress;
-      
-        })
-       .catch(error => {
-       console.error('Error fetching IP address: ' + error);
-      //  alert('Error fetching IP address ' + error);
-      });
-     }
 
-    // Call the function to fetch IP address when the page loads
-     document.addEventListener('DOMContentLoaded', getIPAddress);
+//## code to add cashier logout btn starts here
+let cashier_name = document.querySelector('div.cashier_name');
+let logout_btn = document.querySelector('a.cashier_logout');
 
-   </script>
-   <noscript>Pls. enable javascript in your browser</noscript>
+//## display btn when hovered on
+cashier_name.addEventListener('mouseover', (e)=>{
+ e.preventDefault();
+ 
+ //## add logout_btn classList
+ logout_btn.classList.add('active');
+});
+
+
+//## remove btn when mouse leaves element
+cashier_name.addEventListener('mouseleave', (e)=>{
+   e.preventDefault();
+   
+   //## remove logout_btn classList after 3min
+   setTimeout(() => {
+      logout_btn.classList.remove('active');
+   }, 3000);
+  });
+
+//## code to add cashier logout btn ends here
+
+
+//## cashier's calculator starts here
+function appendNumber(num) {
+   document.getElementById('display').value += num;
+ }
+
+ function appendOperator(op) {
+   let display = document.getElementById('display').value;
+   let lastChar = display[display.length - 1];
+   if (!isNaN(lastChar) || lastChar === '.') {
+     document.getElementById('display').value += op;
+   }
+ }
+
+ function calculate() {
+   let displayValue = document.getElementById('display').value;
+   if (displayValue.trim() !== '') {
+     let result = eval(displayValue);
+     document.getElementById('display').value = result;
+   }
+ }
+
+ function clearDisplay() {
+   document.getElementById('display').value = '';
+ }
+ //## cashier's calculator ends here
+</script>
 </html>
 
 
 <?php
   ## code to get product from the database base on the barcode inputed
   ## check if value is posted, also check the request method
-  if (isset($_POST['bar_code']) && isset($_POST['quantity']) && $_SERVER["REQUEST_METHOD"] === "POST") {
+  if (isset($_POST['bar_code'])  && $_SERVER["REQUEST_METHOD"] === "POST") {
    $bar_code = $conn->real_escape_string($_POST['bar_code']);
-   $quantity = intval($_POST['quantity']); ## Ensure quantity is an integer
+   $quantity = 1; ## Ensure quantity is an integer
 
    $sql = "SELECT * FROM products WHERE bar_code = '$bar_code' LIMIT 1";
    $result = $conn->query($sql);

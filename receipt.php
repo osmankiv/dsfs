@@ -18,7 +18,7 @@ if (!isset($_SESSION['cashier_id']) || !isset($_SESSION['cashier_name']) || $_SE
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Customer's Receipt - Dadral Stores</title>
+   <title>خدمه العمبب - الزهراء</title>
    <!-- Link favIcon -->
    <link rel="shortcut icon" href="./images/shop_logo.png" type="image/x-icon">
 </head>
@@ -32,13 +32,13 @@ if (!isset($_SESSION['cashier_id']) || !isset($_SESSION['cashier_name']) || $_SE
      Tel: 0999501483. Date: <?= Date("d/m/Y H:i a") ?>
    </div> 
 
-   <div class="trans-id">TRANS-ID: GR<?= @$_SESSION["trans_id"] ?></div> <br/>
+   <div class="trans-id">رقم الفاتوره: GR<?= @$_SESSION["trans_id"] ?></div> <br/>
 
    <div class="header">
-      <div>QTY</div>
-      <div>DESCRIPTION</div>
-      <div>AMOUNT</div>
-      <div>TOTAL</div>
+      <div>الكميه</div>
+      <div>المنتحات</div>
+      <div>السعر</div>
+      <div>المجموع</div>
    </div>
 
    <?php foreach (@$_SESSION['cart'] as $product_id => $product): ?>
@@ -53,13 +53,11 @@ if (!isset($_SESSION['cashier_id']) || !isset($_SESSION['cashier_name']) || $_SE
    <br/>
    <div class="sales-infor">
       <div><?= @$_SESSION["payment_mode"] ?>: SD<?= number_format(@$_SESSION['total'], 2)?></div>
-      <div>Cashier: <?= $_SESSION['cashier_name'] ?></div>
+      <div>المحاسب: <?= $_SESSION['cashier_name'] ?></div>
    </div>
 
    <p class="vat-inclusive">
-      THANK YOU FOR YOUR PATRONAGE <br/>
-      Grand Total Is VAT Inclusive <br/>
-      No Returns, No Refunds
+      شكرا لزيارتكم  <br/>
    </p>
 
    <div class="print_btn" onclick="print()"></div>
