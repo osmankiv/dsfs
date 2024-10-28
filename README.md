@@ -54,7 +54,7 @@ git clone https://github.com/osmankiv/
 ```
 
 ```shell
-cd Point-of-sale-system
+cd الزهراء
 ```
 
 ## License
