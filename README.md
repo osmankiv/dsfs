@@ -3,7 +3,7 @@
 ## Overview
 
 This POS web software solution offers a comprehensive system for managing sales and inventory for businesses. It includes functionalities for both administrators and cashiers to streamline the sales process and manage inventory efficiently. 
-
+<img src="https://github.com/osmankiv/dsfs/blob/main/Captu1re.JPG">
 
 
 ## Technologies
