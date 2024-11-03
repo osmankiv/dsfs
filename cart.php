@@ -18,9 +18,11 @@ if (!isset($_SESSION['cashier_id']) || !isset($_SESSION['cashier_name'])) {
 }
 
 ## Calculate the total amount of products in cart
-$total = 0; 
+$total = 0;
+$total_profit=0; 
 foreach ($_SESSION['cart'] as $product) {
    @$total += $product['price'] * $product['quantity'];
+   @$total_profit+=$product['profit'] * $product['quantity'];
 } 
 ?>
 
@@ -31,7 +33,7 @@ foreach ($_SESSION['cart'] as $product) {
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link href="css/style.css" rel="stylesheet">
       <!-- title -->
-      <title>Cart - الزهراء </title>
+      <title>السله - الزهراء </title>
       <!-- fav icon -->
       <link rel="shortcut icon" href="./images/shop_logo.png" type="image/x-icon">
       <!-- font awesome cdn link  -->
@@ -52,7 +54,7 @@ foreach ($_SESSION['cart'] as $product) {
             <div class="cashier_name">
              المحاسب : <?= $_SESSION['cashier_name'] ?> <i class="fas fa-caret-down"></i>
 
-             <a href="./cashier_logout/logout.php" class="cashier_logout">log out</a>
+             <a href="./cashier_logout/logout.php" class="cashier_logout">تسجيل خروج</a>
             </div>
          </header> <br/>
          <!-- page header section ends here -->
@@ -74,9 +76,9 @@ foreach ($_SESSION['cart'] as $product) {
          <button onclick="appendOperator('*')">*</button>
          <button onclick="appendNumber('0')">0</button>
          <button onclick="appendOperator('.')">.</button>
-         <button onclick="calculate()">=</button>
+        <button  onclick="clearDisplay()">C</button>
          <button onclick="appendOperator('/')">/</button>
-         <button class="clear" onclick="clearDisplay()">C</button>
+          <button class="clear" onclick="calculate()">=</button>
       </div>
       </div>
 
@@ -92,7 +94,7 @@ foreach ($_SESSION['cart'] as $product) {
            </form>
              <br/><br/>
              <samp class="title">
-               Shopping cart.
+              سله التسوق
              </samp>
           <br/><br/><br/>
 
@@ -120,6 +122,7 @@ foreach ($_SESSION['cart'] as $product) {
                <samp class="product">
                  x <?= @$product['quantity']; ?>
                </samp>
+
              </div>
              <br/>
            <?php endforeach; ?>
@@ -128,12 +131,16 @@ foreach ($_SESSION['cart'] as $product) {
             <!-- total sum of cart items -->  
             <samp class="title" style="font-size: 19px">
                المجموع: <b>SD<?= number_format($total, 2) ?> </b>
-              <?php @$_SESSION['total'] = $total ?>
+              <?php 
+              @$_SESSION['total'] = $total;
+              @$_SESSION['totalProfit'] =$total_profit;
+               ?>
             </samp>
             <br/><br/><br/>
 
             <!-- form to add more details of product -->
             <form action="./clear_cart.php" method="post">
+                <i class="fas fa-barcode"> </i>
                <input type="number" name="change_element" placeholder="Change element given (SD) ...." min="0"  autocomplete="off" step="1" vlaue="0" style="display:none">
                 <br/><br/>
                 <input type="number" name="change_reminant" placeholder="Change reminant (SD) ...." min="0"  autocomplete="off" step="1" vlaue="0"  style="display:none">
@@ -142,26 +149,26 @@ foreach ($_SESSION['cart'] as $product) {
                 <input type="radio" name="payment_mode" value="بنكك">
 
                 <span class="payment-label">بنكك:</span> 
-                <input type="radio" name="payment_mode" value="نقدي"> 
+                <input type="radio" name="payment_mode"  class="fas fa-ban" value="نقدي"> 
                 <br/><br/>
                 <!-- <span class="payment-label">Debit card:</span> 
-                <input type="radio" name="payment_mode" value="Debit card">
-
+                <input type="radio" name="payment_mode" value="Debit card">  -->
+<!-- 
                 <span class="payment-label">Credit card:</span> 
                 <input type="radio" name="payment_mode" value="Credit card">
 
-               <input type="hidden" name="ip_address" class="ip_address"> -->
+               <input type="hidden" name="ip_address" class="ip_address"> --> 
                <input type="hidden" name="clear-cart" value="clear-cart">
                <br/><br/><br/>
                <button type="submit" class="clear-cart">
-                  <i class="fas fa-print"></i><span>PRINT</span>
+                  <i class="fas fa-print"></i><span>طباعه</span>
                </button>
             </form><br/>
 
             <br/><br/><br/>
             <!-- page footer starts here -->
             <footer class="footer">
-             الزهراء  <span>&copy;2012 - <?= Date('Y'); ?>.</span>
+             الزهراء  <span>&copy;2024 - <?= Date('Y'); ?>.</span>
             </footer>
             <!-- page footer ends here -->
             <br/><br/><br/>
@@ -170,7 +177,7 @@ foreach ($_SESSION['cart'] as $product) {
       </section>
 
       
-      <!-- <img src="./images/claymorphic.png" alt="img" class="claymorphic" style="position: fixed; top: 36vh; left: 75%; height: 25rem; opacity: 20%"> -->
+      <!-- <img src="./images/" alt="img" class="claymorphic" style="position: fixed; top: 36vh; left: 75%; height: 25rem; opacity: 20%"> -->
    </body>
 
 
@@ -336,30 +343,35 @@ function appendNumber(num) {
        $row = $result->fetch_assoc();
        $product_id = $row['id'];
        $product_name = $row['product_name'];
-       $product_price = $row['sales_price'] + $row['tax'];
-
-
+       $product_price = $row['sales_price'];
+       $product_profit = $row['sale_percent'];
+      /////
        if (isset($_SESSION['cart'][$product_id])) { 
            $_SESSION['cart'][$product_id]['quantity'] += $quantity;
-           $_SESSION['cart'][$product_id]['price'] = $product_price; 
+           $_SESSION['cart'][$product_id]['price'] = $product_price;
+           $_SESSION['cart'][$product_id]['profit'] = $product_profit;
+
        } else {
            $_SESSION['cart'][$product_id] = array(
                'name' => $product_name,
                'price' => $product_price,
                'quantity' => $quantity,
+               'profit' => $product_profit,
            );
        }
        ## Recalculate total
        $total = 0; 
        foreach ($_SESSION['cart'] as $product) {
            $total += $product['price'] * $product['quantity'];
+           $total_profit+= $product['profit'] * $product['quantity'];
        } 
        echo'
        <script>window.location = "./cart.php"</script>
        ';
        exit();
    } else {
-       echo '<script>alert("Barcode mismatch!");</script>';
+       echo '<script>alert("خطاء في الباركود !");</script>';
    }
 }
+
 ?>

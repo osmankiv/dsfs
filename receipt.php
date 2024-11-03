@@ -18,17 +18,16 @@ if (!isset($_SESSION['cashier_id']) || !isset($_SESSION['cashier_name']) || $_SE
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>خدمه العمبب - الزهراء</title>
+   <title>خدمه العميل - الزهراء</title>
    <!-- Link favIcon -->
    <link rel="shortcut icon" href="./images/shop_logo.png" type="image/x-icon">
 </head>
 <body>
    
 <section class="wrapper">
-   <h2 class="store-name">الزهراء للعطور</h2>
-
+   <h2 class="store-name">الزهراء</h2>
    <div class="address">ام درمان <br/>
-     <?php date_default_timezone_set('Africa/Lagos'); ?>
+     <?php date_default_timezone_set('Africa/Cairo'); ?>
      Tel: 0999501483. Date: <?= Date("d/m/Y H:i a") ?>
    </div> 
 

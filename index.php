@@ -30,14 +30,14 @@
       <a href="./iamadmin/">
          <span class="admin">
             <i class="fas fa-user"></i>&nbsp;
-            <span>ADMIN</span>
+            <h1><b>الاداره</b></h1>
          </span>
       </a>
 
       <a href="./cashier_login/cashier_login.php">
          <span class="cashier">
             <i class="fas fa-sack-dollar"></i>&nbsp;
-            <span>CASHIER</span>
+            <h1>محاسب</h1>
          </span>
       </a>
      </section>

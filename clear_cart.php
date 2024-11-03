@@ -8,7 +8,8 @@ require_once("./conn.php");
 ## Check if total amount is not equal to 0, and if value is posted in input field
 if ($_SESSION['total'] != 0 && isset($_POST["clear-cart"])) {
     ## Initialize vars for cart informations ...
-    $item_total = $_SESSION['total'];
+    $item_total   = $_SESSION['total'];
+    $total_profit = $_SESSION['totalProfit'];
 
     $trans_id = rand(10000000,99999999);
     ## session set for transaction id
@@ -46,12 +47,14 @@ if ($_SESSION['total'] != 0 && isset($_POST["clear-cart"])) {
     $product_price = $product['price'];
     $total_price = $product['price'] * $product['quantity'];
     $product_quantity = $product['quantity'];
+    // $total_profit=$product['profit']* $product['quantity'];
+
 
     ## change product price and total price to number format
     $product_price_format = number_format($product_price);
     $total_price_format = number_format($total_price);
 
-    ## Concatenate naira sign with the formatted product/total price
+    ## Concatenate sd sign with the formatted product/total price
     $product_price_with_sign = "" . $product_price_format;
     $total_price_with_sign = "" .  $total_price_format;
 
@@ -71,13 +74,13 @@ if ($_SESSION['total'] != 0 && isset($_POST["clear-cart"])) {
 $product_info = implode(', ', $product_info_array);
 
 ## Prepare the SQL statement with placeholders
-$sql = "INSERT INTO `sales` (product_infor, total_naira, trans_id, change_element, change_reminant, payment_mode, ip_address, cashier, year, month, day) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO `sales` (product_infor, total_naira, trans_id, total_profit, change_element, change_reminant, payment_mode, ip_address, cashier, year, month, day) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   
 ## Prepare the statement
 $stmt = $conn->prepare($sql);
 ## Bind parameters to the placeholders
-$stmt->bind_param("siiiisssiii", $product_info, $item_total, $trans_id, $change_element, $change_reminant, $payment_mode, $ip_address, $cashiers_name, $year, $month, $day);
+$stmt->bind_param("siiiiisssiii", $product_info, $item_total, $trans_id,$total_profit, $change_element, $change_reminant, $payment_mode, $ip_address, $cashiers_name, $year, $month, $day);
 
 ## Execute the statement
 if ($stmt->execute() === true) {
